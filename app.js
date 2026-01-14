@@ -5,7 +5,7 @@ let currentUserCode = null; // Cody Code
 // Fetch data from JSON and save to IndexedDB for offline use
 async function loadData() {
     try {
-        const response = await fetch(DATA_URL + '?t=' + Date.now()); // avoid old cache
+        const response = await fetch(DATA_URL); // avoid old cache
         const data = await response.json();
         currentUserCode = localStorage.getItem('codyCode'); // user code
         allCustomers = data;
@@ -98,3 +98,4 @@ document.getElementById('search').addEventListener('input', (e) => {
 
 
 loadData(); // Start loading when page opens
+
