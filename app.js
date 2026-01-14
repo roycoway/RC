@@ -1,21 +1,29 @@
-const DATA_URL = 'data.json'; // Your daily updated file
+const DATA_URL = 'https://opensheet.elk.sh/1N09QQvpyX2viQthFEer9KOr8UL6sK8moRK53usnYRNw/GrpRC'; // Your daily updated file
 let allCustomers = [];
+let currentUserCode = null; // Cody Code
 
 // Fetch data from JSON and save to IndexedDB for offline use
 async function loadData() {
     try {
         const response = await fetch(DATA_URL + '?t=' + Date.now()); // avoid old cache
         const data = await response.json();
+        currentUserCode = localStorage.getItem('codyCode'); // user code
         allCustomers = data;
+
+        const userData = filterByCodyCode(data, currentUserCode);
+
         saveToIndexedDB(data);
-        displayData(data);
+        displayData(userData);
         document.getElementById('status').textContent = 'Data loaded (' + data.length + ' customers)';
     } catch (e) {
         // Offline or error → load from IndexedDB
         const offlineData = await loadFromIndexedDB();
         if (offlineData && offlineData.length > 0) {
+            currentUserCode = localStorage.getItem('codyCode');
             allCustomers = offlineData;
-            displayData(offlineData);
+
+        const userData = filterByCodyCode(offlineData, currentUserCode);
+            displayData(userData);
             document.getElementById('status').textContent = 'Offline mode – using last saved data';
         } else {
             document.getElementById('status').textContent = 'No data available offline yet';
@@ -47,6 +55,14 @@ async function loadFromIndexedDB() {
     return all.length > 0 ? all[0].customers : null;
 }
 
+function filterByCodyCode(customers, codyCode) {
+    if (!codyCode) return customers;
+
+    return customers.filter(c =>
+        c["Cody Code"] && c["Cody Code"].toString().trim() === codyCode.trim()
+    );
+}
+
 // Display table
 function displayData(customers) {
     const tableHead = document.getElementById('tableHead');
@@ -72,10 +88,13 @@ function displayData(customers) {
 // Search function
 document.getElementById('search').addEventListener('input', (e) => {
     const term = e.target.value.toLowerCase();
-    const filtered = allCustomers.filter(c => 
+    const baseData = filterByCodyCode(allCustomers, currentUserCode);
+
+    const filtered = baseData.filter(c => 
         Object.values(c).some(v => String(v).toLowerCase().includes(term))
     );
     displayData(filtered);
 });
+
 
 loadData(); // Start loading when page opens
