@@ -3,20 +3,62 @@ body {
     background-color: #f0f0f0;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
-}
-
-.container {
-    text-align: center;
-    background: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 h1 {
     color: #317EFB;
+
+}
+
+.app {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background-color: #1e1e1e;
+    color: white;
+    padding: 15px;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.sidebar button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: none;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    text-align: left;
+}
+
+.sidebar button:hover:not(:disabled) {
+    background-color: #555;
+}
+
+.sidebar button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Main content */
+.content {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    overflow: auto;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+}
+
+/* Hide table by default */
+#customerTable {
+    display: none;
 }
