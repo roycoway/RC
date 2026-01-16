@@ -1,6 +1,7 @@
 const DATA_URL = 'https://opensheet.elk.sh/1N09QQvpyX2viQthFEer9KOr8UL6sK8moRK53usnYRNw/GrpRC'; // Your daily updated file
 let allCustomers = [];
 let currentUserCode = null; // Cody Code
+let currentView = null;
 
 // Fetch data from JSON and save to IndexedDB for offline use
 async function loadData() {
@@ -13,7 +14,6 @@ async function loadData() {
         const userData = filterByCodyCode(data, currentUserCode);
 
         saveToIndexedDB(data);
-        displayData(userData);
         document.getElementById('status').textContent = 'Data loaded (' + data.length + ' customers)';
     } catch (e) {
         // Offline or error → load from IndexedDB
@@ -23,7 +23,6 @@ async function loadData() {
             allCustomers = offlineData;
 
         const userData = filterByCodyCode(offlineData, currentUserCode);
-            displayData(userData);
             document.getElementById('status').textContent = 'Offline mode – using last saved data';
         } else {
             document.getElementById('status').textContent = 'No data available offline yet';
@@ -98,4 +97,7 @@ document.getElementById('search').addEventListener('input', (e) => {
 
 
 loadData(); // Start loading when page opens
+showDashboard();
+
+
 
