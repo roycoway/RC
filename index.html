@@ -9,14 +9,36 @@
     <meta name="theme-color" content="#317EFB"/>
 </head>
 <body>
-    <div class="container">
-        <h1>My Customers</h1>
-        <input type="text" id="search" placeholder="Search by name, phone, etc." autocomplete="off">
-        <div id="status">Loading data...</div>
-        <table id="customerTable">
-            <thead id="tableHead"></thead>
-            <tbody id="tableBody"></tbody>
-        </table>
+    <div class="app">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <h2>MENU</h2>
+            <button onclick="showDashboard()">Dashboard</button>
+            <button onclick="showCustomers()">Customers</button>
+            <button disabled>Reports</button>
+            <button disabled>Settings</button>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="content">
+            <h1>My Customers</h1>
+
+            <input
+                type="text"
+                id="search"
+                placeholder="Search by name, phone, etc."
+                autocomplete="off"
+            >
+
+            <div id="status">Loading data...</div>
+
+            <table id="customerTable">
+                <thead id="tableHead"></thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </main>
+
     </div>
 
     <script src="app.js"></script>
@@ -26,4 +48,5 @@
         }
     </script>
 </body>
+
 </html>
