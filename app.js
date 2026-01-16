@@ -1,7 +1,7 @@
 const DATA_URL = 'https://opensheet.elk.sh/1N09QQvpyX2viQthFEer9KOr8UL6sK8moRK53usnYRNw/GrpRC'; // Your daily updated file
 let allCustomers = [];
 let currentUserCode = null; // Cody Code
-let currentView = null;
+let currentView = 'dashboard';
 
 // Fetch data from JSON and save to IndexedDB for offline use
 async function loadData() {
@@ -84,6 +84,19 @@ function displayData(customers) {
     ).join('');
 }
 
+function showDashboard() {
+    currentView = 'dashboard';
+    document.getElementById('tableHead').innerHTML = '';
+    document.getElementById('tableBody').innerHTML = '';
+    document.getElementById('status').textContent = 'Select a menu item to continue';
+}
+
+function showCustomers() {
+    currentView = 'customers';
+    const userData = filterByCodyCode(allCustomers, currentUserCode);
+    displayData(userData);
+}
+
 // Search function
 document.getElementById('search').addEventListener('input', (e) => {
     const term = e.target.value.toLowerCase();
@@ -92,12 +105,12 @@ document.getElementById('search').addEventListener('input', (e) => {
     const filtered = baseData.filter(c => 
         Object.values(c).some(v => String(v).toLowerCase().includes(term))
     );
-    displayData(filtered);
 });
 
 
 loadData(); // Start loading when page opens
 showDashboard();
+
 
 
 
