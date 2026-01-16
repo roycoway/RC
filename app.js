@@ -86,15 +86,12 @@ function displayData(customers) {
 
 function showDashboard() {
     currentView = 'dashboard';
-    document.getElementById('tableHead').innerHTML = '';
-    document.getElementById('tableBody').innerHTML = '';
-    document.getElementById('status').textContent = 'Select a menu item to continue';
+document.getElementById('customerTable').style.display = 'none';
 }
 
 function showCustomers() {
     currentView = 'customers';
-    const userData = filterByCodyCode(allCustomers, currentUserCode);
-    displayData(userData);
+document.getElementById('customerTable').style.display = 'table';
 }
 
 // Search function
@@ -110,6 +107,7 @@ document.getElementById('search').addEventListener('input', (e) => {
 
 loadData(); // Start loading when page opens
 showDashboard();
+
 
 
 
